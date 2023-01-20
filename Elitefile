@@ -1,0 +1,24 @@
+required_version is 0.1
+
+set bin_path as      "/usr/bin/"
+set output   as      "{bin_path}checks"
+
+set sudo     as      "sudo"
+set compiler as      "c++"
+set standard as std  "c++20"
+set flag/s   as link "ssl crypto stdc++fs"
+
+
+for signal "start" [
+    set files as "src/checks.cpp"
+    
+    for argument "install" [
+        use exec "{sudo} {compiler} {standard} {files} -o {output} {flag/s} -Wno-deprecated-declarations"
+
+        for exists "{output}" [
+            println "Installed to {output}"
+        ]
+    ]
+
+    use signal "exit"
+]
